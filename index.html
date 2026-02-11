@@ -2,16 +2,51 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inside the Mind</title>
-  <link rel="stylesheet" href="src/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inside the Mind - Vote Interactif 3D</title>
+  <link rel="stylesheet" href="./src/style.css" />
 </head>
 <body>
 <div id="ui">
-  <h1 id="title">Inside the Mind</h1>
-  <p id="subtitle">Chaque choix laisse une trace</p>
-  <p id="description"></p>
+  <h1>Inside the Mind</h1>
+  <p class="subtitle">Chaque choix façonne votre esprit</p>
+  <p id="label"></p>
+  <p id="energy">Énergie totale : 0</p>
 </div>
 
-<script type="module" src="src/main.js"></script>
+<div id="vote-result"></div>
+
+<div id="stats">
+  <div class="stat-bar">
+    <div class="stat-fill" id="raison-bar" style="width: 0%;"></div>
+  </div>
+
+  <div class="stat-item">
+    <span class="stat-label">Instinct</span>
+    <span class="stat-value" id="instinct-count">0</span>
+  </div>
+  <div class="stat-bar">
+    <div class="stat-fill" id="instinct-bar" style="width: 0%;"></div>
+  </div>
+</div>
+
+
+<script type="module" src="./src/main.js"></script>
+
+<script>
+  // Update stats in real-time
+  window.updateStats = function(votes) {
+    const maxVotes = Math.max(votes.empathie, votes.raison, votes.instinct, 1);
+
+    document.getElementById('empathie-count').textContent = votes.empathie;
+    document.getElementById('raison-count').textContent = votes.raison;
+    document.getElementById('instinct-count').textContent = votes.instinct;
+
+    // Barres basées sur le maximum, pas sur le total
+    document.getElementById('empathie-bar').style.width = (votes.empathie / maxVotes * 100) + '%';
+    document.getElementById('raison-bar').style.width = (votes.raison / maxVotes * 100) + '%';
+    document.getElementById('instinct-bar').style.width = (votes.instinct / maxVotes * 100) + '%';
+  };
+</script>
 </body>
 </html>
